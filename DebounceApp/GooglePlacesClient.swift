@@ -11,7 +11,7 @@ enum GooglePlacesClient {
     case search(SearchRequest)
 
     static let baseURL = URL(string: "https://maps.googleapis.com/maps/api/place/autocomplete/json?")!
-    static let secretKey = "AIzaSyC3s4DuNYs_SccOm3ZvXlozsMeQzuiMbHo"
+    static let secretKey = "AIzaSyC3s4DuNYs_SccOm3ZvXlozsMeQzuiMbHo" //USE YOUR OWN
     static let encoder = JSONEncoder()
     static var decoder: JSONDecoder = {
         let decoder = JSONDecoder()
@@ -70,21 +70,17 @@ enum GooglePlacesClient {
     }
 
     func execute<T: Decodable>(forResponse response: T.Type, completion: @escaping (Result<T, Error>) -> Void) {
-        print("MY REQUEST", request)
         URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.failure(error))
                 return
             }
             guard let data = data else { return }
-            print("MY DATA", data)
             do {
                 let decoded = try Self.decoder.decode(T.self, from: data)
-                print("MY DECODED", decoded)
                 completion(.success(decoded))
             } catch {
                 completion(.failure(error))
-                print("DECODING ERROR", error)
             }
         }.resume()
     }
