@@ -2,7 +2,7 @@
 
 ### Task
 
-Build a mobile app that shows Autosuggest UI component which uses Google Places API to get the data. You can use your favorite mobile IDE and language.
+Build an iOS app that shows Autosuggest UI component which uses Google Places API to get the data.
 
 **API endpoint**
 
@@ -10,7 +10,7 @@ Build a mobile app that shows Autosuggest UI component which uses Google Places 
 
 **API KEY**
 
-To be provided by interviewer.
+Create your own here: https://developers.google.com/maps/documentation/places/web-service/autocomplete#maps_http_places_autocomplete_fr-txt
 
 **API Docs**
 
