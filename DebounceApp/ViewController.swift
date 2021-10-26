@@ -7,13 +7,102 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDelegateFlowLayout {
+
+    lazy var searchBar: UITextField = {
+        var textfield = UITextField(frame: .zero)
+        textfield.placeholder = "Search Google Places..."
+        textfield.backgroundColor = .white
+        textfield.textColor = .black
+        textfield.borderStyle = .roundedRect
+        textfield.textAlignment = .left
+        textfield.translatesAutoresizingMaskIntoConstraints = false
+        return textfield
+    }()
+
+    lazy var collectionView: UICollectionView = {
+        let collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout.init())
+        collectionView.backgroundColor = .lightGray
+        collectionView.register(ResultsCell.self, forCellWithReuseIdentifier: "resultsCell")
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.delegate = self
+        collectionView.dataSource = self
+        return collectionView
+    }()
+
+    var objects: [PredictionElement] = []
+
+    override func loadView() {
+        super.loadView()
+        searchBar.frame = CGRect(x: 0, y: 20, width: view.coordinateSpace.bounds.width, height: 60)
+        view.addSubview(collectionView)
+        view.addSubview(searchBar)
+        self.view = view
+        NSLayoutConstraint.activate([
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            searchBar.heightAnchor.constraint(equalToConstant: 42),
+            collectionView.topAnchor.constraint(equalTo: view.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        collectionView.contentInset = UIEdgeInsets(top: 70, left: 0, bottom: 0, right: 0)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        view.backgroundColor = .lightGray
+        searchBar.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
     }
 
+    @objc func editingChanged(_ textfield: UITextField) {
+        NSObject.cancelPreviousPerformRequests(
+            withTarget: self,
+            selector: #selector(debounce),
+            object: nil
+        )
+        perform(#selector(debounce), with: nil, afterDelay: 0.2)
+    }
 
+    @objc func debounce() {
+        guard let query = searchBar.text else { return }
+        let searchRequest = SearchRequest(query: query, sort: Sort(direction: .ascending, timestamp: "last_edited_time"))
+        GooglePlacesClient.search(searchRequest).execute(forResponse: Prediction.self) { [weak self] result in
+            switch result {
+            case .success(let searchResult):
+                DispatchQueue.main.async {
+                    self?.objects = searchResult.predictions
+                    self?.collectionView.reloadData()
+                }
+            case .failure(let error):
+                break
+            }
+        }
+    }
 }
 
+extension ViewController: UICollectionViewDelegate {
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.coordinateSpace.bounds.width, height: 50)
+    }
+}
+
+extension ViewController: UICollectionViewDataSource {
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let resultsCell = collectionView.dequeueReusableCell(withReuseIdentifier: "resultsCell", for: indexPath) as? ResultsCell else { fatalError("Must dequeue ResultsCell") }
+        resultsCell.model = objects[indexPath.row]
+        return resultsCell
+    }
+
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        1
+    }
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        objects.count
+    }
+}

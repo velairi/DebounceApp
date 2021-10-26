@@ -10,9 +10,12 @@
 		8C14E8E3271F2B6500C73EC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8E2271F2B6500C73EC8 /* AppDelegate.swift */; };
 		8C14E8E5271F2B6500C73EC8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8E4271F2B6500C73EC8 /* SceneDelegate.swift */; };
 		8C14E8E7271F2B6500C73EC8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8E6271F2B6500C73EC8 /* ViewController.swift */; };
-		8C14E8EA271F2B6500C73EC8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C14E8E8271F2B6500C73EC8 /* Main.storyboard */; };
 		8C14E8EC271F2B6600C73EC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C14E8EB271F2B6600C73EC8 /* Assets.xcassets */; };
 		8C14E8EF271F2B6600C73EC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8C14E8ED271F2B6600C73EC8 /* LaunchScreen.storyboard */; };
+		8C14E8F9271F961B00C73EC8 /* GooglePlacesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8F8271F961B00C73EC8 /* GooglePlacesClient.swift */; };
+		8C14E8FC271F962E00C73EC8 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8FB271F962E00C73EC8 /* Prediction.swift */; };
+		8C14E8FF271F963F00C73EC8 /* ResultsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E8FE271F963F00C73EC8 /* ResultsCell.swift */; };
+		8C14E93C2728B04F00C73EC8 /* SearchRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C14E93B2728B04F00C73EC8 /* SearchRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,10 +23,13 @@
 		8C14E8E2271F2B6500C73EC8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8C14E8E4271F2B6500C73EC8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8C14E8E6271F2B6500C73EC8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		8C14E8E9271F2B6500C73EC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8C14E8EB271F2B6600C73EC8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8C14E8EE271F2B6600C73EC8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8C14E8F0271F2B6600C73EC8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8C14E8F8271F961B00C73EC8 /* GooglePlacesClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GooglePlacesClient.swift; sourceTree = "<group>"; };
+		8C14E8FB271F962E00C73EC8 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
+		8C14E8FE271F963F00C73EC8 /* ResultsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsCell.swift; sourceTree = "<group>"; };
+		8C14E93B2728B04F00C73EC8 /* SearchRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +65,10 @@
 				8C14E8E2271F2B6500C73EC8 /* AppDelegate.swift */,
 				8C14E8E4271F2B6500C73EC8 /* SceneDelegate.swift */,
 				8C14E8E6271F2B6500C73EC8 /* ViewController.swift */,
-				8C14E8E8271F2B6500C73EC8 /* Main.storyboard */,
+				8C14E8F8271F961B00C73EC8 /* GooglePlacesClient.swift */,
+				8C14E8FB271F962E00C73EC8 /* Prediction.swift */,
+				8C14E8FE271F963F00C73EC8 /* ResultsCell.swift */,
+				8C14E93B2728B04F00C73EC8 /* SearchRequest.swift */,
 				8C14E8EB271F2B6600C73EC8 /* Assets.xcassets */,
 				8C14E8ED271F2B6600C73EC8 /* LaunchScreen.storyboard */,
 				8C14E8F0271F2B6600C73EC8 /* Info.plist */,
@@ -126,7 +135,6 @@
 			files = (
 				8C14E8EF271F2B6600C73EC8 /* LaunchScreen.storyboard in Resources */,
 				8C14E8EC271F2B6600C73EC8 /* Assets.xcassets in Resources */,
-				8C14E8EA271F2B6500C73EC8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -139,21 +147,17 @@
 			files = (
 				8C14E8E7271F2B6500C73EC8 /* ViewController.swift in Sources */,
 				8C14E8E3271F2B6500C73EC8 /* AppDelegate.swift in Sources */,
+				8C14E8FF271F963F00C73EC8 /* ResultsCell.swift in Sources */,
 				8C14E8E5271F2B6500C73EC8 /* SceneDelegate.swift in Sources */,
+				8C14E93C2728B04F00C73EC8 /* SearchRequest.swift in Sources */,
+				8C14E8FC271F962E00C73EC8 /* Prediction.swift in Sources */,
+				8C14E8F9271F961B00C73EC8 /* GooglePlacesClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		8C14E8E8271F2B6500C73EC8 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				8C14E8E9271F2B6500C73EC8 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		8C14E8ED271F2B6600C73EC8 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
