@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
-    lazy var searchBar: UITextField = {
+    lazy var searchField: UITextField = {
         var textfield = UITextField(frame: .zero)
         textfield.placeholder = "Search Google Places..."
         textfield.backgroundColor = .white
@@ -34,15 +34,15 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout {
 
     override func loadView() {
         super.loadView()
-        searchBar.frame = CGRect(x: 0, y: 20, width: view.coordinateSpace.bounds.width, height: 60)
+        searchField.frame = CGRect(x: 0, y: 20, width: view.coordinateSpace.bounds.width, height: 60)
         view.addSubview(collectionView)
-        view.addSubview(searchBar)
+        view.addSubview(searchField)
         self.view = view
         NSLayoutConstraint.activate([
-            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
-            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
-            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
-            searchBar.heightAnchor.constraint(equalToConstant: 42),
+            searchField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            searchField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            searchField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            searchField.heightAnchor.constraint(equalToConstant: 42),
             collectionView.topAnchor.constraint(equalTo: view.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -54,7 +54,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
-        searchBar.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
+        searchField.addTarget(self, action: #selector(editingChanged(_:)), for: .editingChanged)
     }
 
     @objc func editingChanged(_ textfield: UITextField) {
@@ -67,7 +67,7 @@ class ViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     }
 
     @objc func debounce() {
-        guard let query = searchBar.text else { return }
+        guard let query = searchField.text else { return }
         let searchRequest = SearchRequest(query: query, sort: Sort(direction: .ascending, timestamp: "last_edited_time"))
         GooglePlacesClient.search(searchRequest).execute(forResponse: Prediction.self) { [weak self] result in
             switch result {
